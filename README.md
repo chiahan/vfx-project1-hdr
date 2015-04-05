@@ -14,4 +14,4 @@
 
 ### Method #2: HDR 
   我們參考Paul E. Debevec 論文中所提到的演算法，最小化目標方程式，滿足矩陣Ax=b，以SVD求解矩陣x，得到g函數，回算
-![test](issues/1)
+![test](https://cloud.githubusercontent.com/assets/11753996/6997533/4749f0ac-dbf1-11e4-8c71-b86ffb72667d.jpg)
