@@ -14,4 +14,4 @@
 
 ### Method #2: HDR 
   我們參考Paul E. Debevec 論文中所提到的演算法，最小化目標方程式，滿足矩陣Ax=b，以SVD求解矩陣x，得到g函數，回算
-[![xxx] (images/original/servers/0026.jpg)](images/original/servers/0026.jpg 'servers')
+[![xxx](images/original/servers/0026.jpg)]
