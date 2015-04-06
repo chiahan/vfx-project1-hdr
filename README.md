@@ -38,8 +38,9 @@ Tone Mapping目的為將HDR轉為LDR，假設
 </div>
 
 設定場景中最大亮度為1.5，求得Ld
-![](https://cloud.githubusercontent.com/assets/11753996/7006744/1c087e20-dcb6-11e4-9e8f-5d42b487120f.png)
-
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11753996/7006744/1c087e20-dcb6-11e4-9e8f-5d42b487120f.png")
+</div>
 
 最後重新計算LDR每個channel的亮度值
 ![](https://cloud.githubusercontent.com/assets/11753996/7006781/6a431866-dcb6-11e4-911a-852b4feccaaa.png)
