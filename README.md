@@ -25,17 +25,20 @@
 
 
 ### Method #3: Tone Mapping (global operater)
-Tone Mapping目的為將HDR轉為LDR，假設 ## Lw=0.27R+0.67G+0.06B
+Tone Mapping目的為將HDR轉為LDR，假設 
+####Lw=0.27R+0.67G+0.06B
 
 先在圖像中取得每一點的亮度值並取log，取得平均值再做exponetional
 ![](https://cloud.githubusercontent.com/assets/11753996/7006655/7dddc6a6-dcb5-11e4-87e2-d35b361f983c.png)
 
 
-定義normal-key a值為0.18，代入下列方程式求得Lm
+定義normal-key a值為0.18，並代入平均亮度Lw至下列方程式求得Lm
 ![](https://cloud.githubusercontent.com/assets/11753996/7006675/97173850-dcb5-11e4-898a-5190125ffb3d.png)
+
 
 設定場景中最大亮度為1.5，求得Ld
 ![](https://cloud.githubusercontent.com/assets/11753996/7006744/1c087e20-dcb6-11e4-9e8f-5d42b487120f.png)
+
 
 最後重新計算LDR每個channel的亮度值
 ![](https://cloud.githubusercontent.com/assets/11753996/7006781/6a431866-dcb6-11e4-911a-852b4feccaaa.png)
