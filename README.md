@@ -17,6 +17,5 @@
 ![](https://cloud.githubusercontent.com/assets/11753996/7004184/d38f9a00-dc99-11e4-9e53-b0a3354c7874.png
 )
 
-
 滿足矩陣Ax=b，以SVD求解矩陣x，得到g函數，回算
 ![](https://cloud.githubusercontent.com/assets/11753996/7004201/12c4cec0-dc9a-11e4-926c-625f89f4e6f9.png)
