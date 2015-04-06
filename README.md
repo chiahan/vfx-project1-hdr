@@ -34,7 +34,7 @@ Tone Mapping目的為將HDR轉為LDR，假設
 
 定義normal-key a值為0.18，並代入平均亮度Lw至下列方程式求得Lm
 <div style="display:block">
-![](https://cloud.githubusercontent.com/assets/11753996/7006675/97173850-dcb5-11e4-898a-5190125ffb3d.png)
+<img src="https://cloud.githubusercontent.com/assets/11753996/7006675/97173850-dcb5-11e4-898a-5190125ffb3d.png">
 </div>
 
 設定場景中最大亮度為1.5，求得Ld
