@@ -24,6 +24,23 @@
 計算多張不同曝光時間同像素的點，找出其算術平均值得到HDR圖像
 
 
-### Method #3: Tone Mapping
+### Method #3: Tone Mapping (global operater)
+Tone Mapping目的為將HDR轉為LDR，假設 ##Lw=0.27R+0.67G+0.06B
+先在圖像中取得每一點的亮度值並取log，取得平均值再做exponetional
+
+
+定義normal-key a值為0.18，代入下列方程式求得Lm
+
+
+設定場景中最大亮度為1.5，求得Ld
+
+
+最後重新計算LDR每個channel的亮度值
+
+
+
+
+
+### Method #4: Tone Mapping (local operater)
 
 
