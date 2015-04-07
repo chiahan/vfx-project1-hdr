@@ -98,6 +98,9 @@ output:
 input:
 用hdr演算法得到的output(同上圖）
 output:
+a越大圖月亮
+
+white越大圖越亮（亮部細節增加,暗部細節減少）
 
 ### #4: Tone Mapping (local operater)
 input:
