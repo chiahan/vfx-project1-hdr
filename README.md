@@ -51,5 +51,5 @@
 
 
 ### Method #4: Tone Mapping (local operater)
-
+1.找出一定範圍內，使得所有像素亮度都差不多，沒有任何的sharp contrast，之後分析這些相片convolve
 
