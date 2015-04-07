@@ -95,7 +95,6 @@ output:
 <img src="https://cloud.githubusercontent.com/assets/11717755/7030912/a0951ec0-dd9a-11e4-96b5-61a238cdab0b.png">
 
 ### #3: Tone Mapping (global operater)
-
 input:
 用hdr演算法得到的output(同上圖）
 output:
@@ -104,7 +103,6 @@ a越大圖月亮
 white越大圖越亮（亮部細節增加,暗部細節減少）
 
 ### #4: Tone Mapping (local operater)
-
 input:
 用hdr演算法得到的output(同上上圖）
 output:
