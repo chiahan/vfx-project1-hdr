@@ -92,5 +92,10 @@ f4 1/30
 </div>
 output:
 
-
+###
+output
+a = 0.5, phi = 8, epsilon = 0.05
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7030453/5c67bbe8-dd97-11e4-96c1-be31bc9e4fd0.png">
+</div>
 
