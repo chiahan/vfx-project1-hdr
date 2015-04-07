@@ -49,6 +49,9 @@
 <img src="https://cloud.githubusercontent.com/assets/11753996/7006781/6a431866-dcb6-11e4-911a-852b4feccaaa.png">
 </div>
 
+### #4: Tone Mapping (local operater)
+1.找出一定範圍內，使得所有像素亮度都差不多，沒有任何的sharp contrast，之後分析這些相片convolve
+
 ##Result
 
 ### #1: Alignment (Medain Threshold Bitmap)
@@ -58,8 +61,9 @@ input:
 <div style="display:block">
 <img src="https://cloud.githubusercontent.com/assets/11717755/7029336/82208048-dd8f-11e4-84d4-18cde0eb320d.JPG">
 </div>
-
-
-### Method #4: Tone Mapping (local operater)
-1.找出一定範圍內，使得所有像素亮度都差不多，沒有任何的sharp contrast，之後分析這些相片convolve
-
+https://cloud.githubusercontent.com/assets/11717755/7028775/b675c3d0-dd8a-11e4-8bf8-95d054e6b4df.JPG
+https://cloud.githubusercontent.com/assets/11717755/7029017/c0e9a56e-dd8c-11e4-94df-4d60324268ce.JPG
+https://cloud.githubusercontent.com/assets/11717755/7029081/323783c6-dd8d-11e4-8365-8d90f6cf16a7.JPG
+https://cloud.githubusercontent.com/assets/11717755/7029109/7219b464-dd8d-11e4-89e9-83148e517470.JPG
+https://cloud.githubusercontent.com/assets/11717755/7029210/87ecc1ae-dd8e-11e4-8c6f-2e69a0c0bff9.JPG
+https://cloud.githubusercontent.com/assets/11717755/7029336/82208048-dd8f-11e4-84d4-18cde0eb320d.JPG
