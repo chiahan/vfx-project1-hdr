@@ -1,7 +1,9 @@
 # [vfx 2015 Spring](http://www.csie.ntu.edu.tw/~cyy/courses/vfx/15spring/ "Digital Visual Effects 2011 Spring") @ CSIE.NTU.EDU.TW
 ## project #1: High Dynamic Range Imaging ([original link](http://www.csie.ntu.edu.tw/~cyy/courses/vfx/11spring/assignments/))
 
-### Method #1: Alignment (Medain Threshold Bitmap)
+## Algorithm
+
+### #1: Alignment (Medain Threshold Bitmap)
   將圖片RGB資訊轉成灰階，方便後續採取Median Threshold Bitmap方法對位，為了增加對位的精準以及處理速度，把原圖尺寸一直縮小二分之一
 到最後有七張不同尺寸等級的圖片，以論文裡的演算法對每兩張不同曝光時間的照片互相比較，並將每次位移暫存並移動，其餘部分填上黑色，從最小尺寸等級一直到原尺寸，完成alignment對位．
 
@@ -12,7 +14,7 @@
 5. 從尺寸最小的圖片往上做比較，進行對位
 
 
-### Method #2: HDR 
+### #2: HDR 
 1.我們參考Paul E. Debevec 論文中所提到的演算法，最小化目標方程式
 ![](https://cloud.githubusercontent.com/assets/11753996/7004184/d38f9a00-dc99-11e4-9e53-b0a3354c7874.png)
 
@@ -24,7 +26,7 @@
 3.計算多張不同曝光時間同像素的點，找出其算術平均值得到HDR圖像
 
 
-### Method #3: Tone Mapping (global operater)
+### #3: Tone Mapping (global operater)
 1.Tone Mapping目的為將HDR轉為LDR，假設 
 ####Lw=0.27R+0.67G+0.06B
 
@@ -39,7 +41,7 @@
 
 4.設定場景中最大亮度為1.5，求得Ld
 <div style="display:block">
-<img src="https://cloud.githubusercontent.com/assets/11753996/7006744/1c087e20-dcb6-11e4-9e8f-5d42b487120f.png")
+<img src="https://cloud.githubusercontent.com/assets/11753996/7006744/1c087e20-dcb6-11e4-9e8f-5d42b487120f.png">
 </div>
 
 5.最後重新計算LDR每個channel的亮度值
@@ -47,7 +49,15 @@
 <img src="https://cloud.githubusercontent.com/assets/11753996/7006781/6a431866-dcb6-11e4-911a-852b4feccaaa.png">
 </div>
 
+##Result
 
+### #1: Alignment (Medain Threshold Bitmap)
+
+### #2: HDR 
+input:
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7029336/82208048-dd8f-11e4-84d4-18cde0eb320d.JPG">
+</div>
 
 
 ### Method #4: Tone Mapping (local operater)
