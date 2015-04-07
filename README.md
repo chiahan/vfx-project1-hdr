@@ -1,6 +1,29 @@
 # [vfx 2015 Spring](http://www.csie.ntu.edu.tw/~cyy/courses/vfx/15spring/ "Digital Visual Effects 2011 Spring") @ CSIE.NTU.EDU.TW
 ## project #1: High Dynamic Range Imaging ([original link](http://www.csie.ntu.edu.tw/~cyy/courses/vfx/11spring/assignments/))
 
+## 程式執行方式
+使用matlab2014撰寫
+執行program中的main.m
+參數都在main.m中最上方修改
+```
+%   folder: the (relative) path containing the image set.
+%   type_: 'global' or 'local' tone mapping
+%   phi: used by local tone mapping
+%   epsilon: used by local tone mapping (find the max gaussian scale)
+%   lambda: smoothness factor for gsolve.
+%   prefix: output LDR file's prefix name
+%   [srow scol]: the dimension of the resized image for sampling in gsolve.
+%   shift_bits: the maximum number of bits in the final offsets in
+%   alignment.
+%
+function main(folder, type_, alpha_, delta_, white_, phi, epsilon, lambda, prefix, srow, scol, shift_bits)
+```
+
+## 實作內容
+1. alignment
+2. hdr
+3. tonemapping(global operator)
+4. tonemapping(local operator)
 ## Algorithm
 
 ### #1: Alignment (Medain Threshold Bitmap)
