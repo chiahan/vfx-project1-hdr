@@ -55,39 +55,42 @@
 ##Result
 
 ### #1: Alignment (Medain Threshold Bitmap)
+由於原圖之間差異太小，看不出來效果
+我們故意拿一張圖位移很多來測試
+設定在7層（最大位移2^7)時會移回來
 
+另外，照片之間差異小時，層數設太大反而會因為照片曝光差太多而失敗，通常設定3層可以得到較好的比較結果
 ### #2: HDR 
 input:
+f4 2"
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7028775/b675c3d0-dd8a-11e4-8bf8-95d054e6b4df.JPG">
+</div>
+f4 1"
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7029017/c0e9a56e-dd8c-11e4-94df-4d60324268ce.JPG">
+</div>
+f4 0.5"
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7029081/323783c6-dd8d-11e4-8365-8d90f6cf16a7.JPG">
+</div>
+f4 1/5
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7029109/7219b464-dd8d-11e4-89e9-83148e517470.JPG">
+</div>
+f4 1/8
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7029210/87ecc1ae-dd8e-11e4-8c6f-2e69a0c0bff9.JPG">
+</div>
+f4 1/15
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7029336/82208048-dd8f-11e4-84d4-18cde0eb320d.JPG">
+</div>
 f4 1/30
 <div style="display:block">
 <img src="https://cloud.githubusercontent.com/assets/11717755/7029336/82208048-dd8f-11e4-84d4-18cde0eb320d.JPG">
 </div>
-f4 1/15
-<div style="display:block">
-<img src="https://cloud.githubusercontent.com/assets/11717755/7028775/b675c3d0-dd8a-11e4-8bf8-95d054e6b4df.JPG">
-</div>
-f4 1/8
-<div style="display:block">
-<img src="https://cloud.githubusercontent.com/assets/11717755/7029017/c0e9a56e-dd8c-11e4-94df-4d60324268ce.JPG">
-</div>
-f4 1/4
-<div style="display:block">
-<img src="https://cloud.githubusercontent.com/assets/11717755/7029081/323783c6-dd8d-11e4-8365-8d90f6cf16a7.JPG">
-</div>
-f4 0.5"
-<div style="display:block">
-<img src="https://cloud.githubusercontent.com/assets/11717755/7029109/7219b464-dd8d-11e4-89e9-83148e517470.JPG">
-</div>
-f4 1"
-<div style="display:block">
-<img src="https://cloud.githubusercontent.com/assets/11717755/7029210/87ecc1ae-dd8e-11e4-8c6f-2e69a0c0bff9.JPG">
-</div>
-f4 2"
-<div style="display:block">
-<img src="https://cloud.githubusercontent.com/assets/11717755/7029336/82208048-dd8f-11e4-84d4-18cde0eb320d.JPG">
-</div>
-
-
+output:
 
 
 
