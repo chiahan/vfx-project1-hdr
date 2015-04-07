@@ -95,6 +95,7 @@ output:
 <img src="https://cloud.githubusercontent.com/assets/11717755/7030912/a0951ec0-dd9a-11e4-96b5-61a238cdab0b.png">
 
 ### #3: Tone Mapping (global operater)
+
 input:
 用hdr演算法得到的output(同上圖）
 output:
@@ -103,6 +104,7 @@ a越大圖月亮
 white越大圖越亮（亮部細節增加,暗部細節減少）
 
 ### #4: Tone Mapping (local operater)
+
 input:
 用hdr演算法得到的output(同上上圖）
 output:
@@ -111,7 +113,7 @@ a = 0.5, phi = 8, epsilon = 0.05
 <img src="https://cloud.githubusercontent.com/assets/11717755/7030453/5c67bbe8-dd97-11e4-96c1-be31bc9e4fd0.png">
 </div>
 
-比較：matlab tone mapping function得到的結果
+比較：matlab tone mapping function得到的結果（下圖）
 <div style="display:block">
 <img src="https://cloud.githubusercontent.com/assets/11717755/7031044/6c03f14e-dd9b-11e4-89fb-df3066e1ed96.png">
 </div>
