@@ -149,7 +149,7 @@ output:
  
 ### #3: Tone Mapping (global operater)
 input:用hdr演算法得到的output(同上圖）<br>
-output:a越大圖整體越亮，white越大亮部細節增加
+output:a越大圖整體越亮，white越大亮部細節增加，但亮部細節增加的同時暗步細節也會消失，因此需要local的tone mapping來改善
 ![0407library_tone_mapped](https://cloud.githubusercontent.com/assets/11717755/7037412/1a0d178c-ddd5-11e4-9770-a6f6d4d72f5e.png)
  
 ### #4: Tone Mapping (local operater)
