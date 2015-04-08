@@ -153,14 +153,16 @@ output:a越大圖整體越亮，white越大亮部細節增加
 ![0407library_tone_mapped](https://cloud.githubusercontent.com/assets/11717755/7037412/1a0d178c-ddd5-11e4-9770-a6f6d4d72f5e.png)
  
 ### #4: Tone Mapping (local operater)
-input:用hdr演算法得到的output(同上上圖）
+input:用hdr演算法得到的output(同上上圖）<br>
 output:
-a = 0.5, phi = 8, epsilon = 0.05
+a = 0.5, phi = 8, epsilon = 0.05 <br>
+可看出和global的結果比起來，local的邊緣較銳利，顏色相近的區域中對比較高
 <div style="display:block">
 <img src="https://cloud.githubusercontent.com/assets/11717755/7030453/5c67bbe8-dd97-11e4-96c1-be31bc9e4fd0.png">
 </div>
  
-比較：matlab tone mapping function得到的結果（下圖）
+###比較：使用matlab tone mapping function得到的結果（下圖）
+整體色調和相機拍到的照片以及hdr檔差很多，從paper實作的結果似乎比較好
 <div style="display:block">
 <img src="https://cloud.githubusercontent.com/assets/11717755/7031044/6c03f14e-dd9b-11e4-89fb-df3066e1ed96.png">
 </div>
