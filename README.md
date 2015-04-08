@@ -145,13 +145,12 @@ f4 1/30
 output:
 <div style="display:block">
 <img src="https://cloud.githubusercontent.com/assets/11717755/7030912/a0951ec0-dd9a-11e4-96b5-61a238cdab0b.png">
+</div>
  
 ### #3: Tone Mapping (global operater)
 input:用hdr演算法得到的output(同上圖）<br>
 output:a越大圖整體越亮，white越大亮部細節增加
 ![0407library_tone_mapped](https://cloud.githubusercontent.com/assets/11717755/7037412/1a0d178c-ddd5-11e4-9770-a6f6d4d72f5e.png)
-
- 
  
 ### #4: Tone Mapping (local operater)
 input:用hdr演算法得到的output(同上上圖）
