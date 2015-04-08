@@ -100,8 +100,7 @@ function main(folder, type_, alpha_, delta_, white_, phi, epsilon, lambda, prefi
 ##Result
  
 ### #1: Alignment (Medain Threshold Bitmap)
-由於原圖之間差異太小，看不出來效果
-我們故意拿一張圖位移很多來測試
+由於原圖之間差異太小，看不出來效果，我們故意拿一張圖位移很多來測試，設定在7層（最大位移為2^7)時會移回來
 input:
 圖一
 <div style="display:block">
@@ -110,10 +109,9 @@ input:
 圖一位移後
 ![test2](https://cloud.githubusercontent.com/assets/11717755/7038036/34aeb92a-ddde-11e4-962c-30bf6e5821e2.jpg)
 output:
-
-設定在7層（最大位移2^7)時會移回來
- 
+![alignment_test](https://cloud.githubusercontent.com/assets/11717755/7038041/52d82fb2-ddde-11e4-8bc9-f3d5df46f2d8.png)
 另外，照片之間差異小時，層數設太大反而會因為照片曝光差太多而失敗，通常設定3層可以得到較好的比較結果
+
 ### #2: HDR 
 input:
 f4 2"
