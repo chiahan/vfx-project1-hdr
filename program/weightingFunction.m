@@ -5,7 +5,7 @@ function weight = weightingFunction(weightType)
 	case 'one'
 	    weight = ones(256, 1);
 	case 'debevec97'
-	    weight = [1:1:256];
-	    weight = min(weight, 256-weight);
+	    weight = [0:1:255];
+	    weight = min(weight, 255-weight);
     end
 end

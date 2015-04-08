@@ -9,6 +9,8 @@
 %  images: 4 dimensional matrices, representing the whole image set.
 %	[row, col, channel, i] for i = 1:number of images.
 %  exposureTimes: (number, 1) matrices, representing image's exposure time in second.
+%  g_images: 3 dimensional matrices, representing the whole image set.
+%	[row, col, i] for i = 1:number of images.
 %
 % note
 %  We assume the input images have the same dimension, channel number and color space,
@@ -38,10 +40,6 @@ function [g_images, images, exposureTimes] = readImages(folder, extension)
 	img = imread(filename);
 	images(:,:,:,i) = img;
     g_images(:,:,i) = rgb2gray(img);
-    %figure; imshow(images(:,:,:,i));
-    %cmap = colormap('gray');
-    %imwrite(g_images(:,:,i),cmap, ['test',i,'.jpg'], 'jpeg');
-    
     
 	exif = exifread(filename);
 	exposureTimes(i) = exif.ExposureTime;

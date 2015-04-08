@@ -1,34 +1,37 @@
-%
 % 
+% This function takes two exposure images, and determines how much to move 
+% the second exposure (img2) in x and y to align it with the first exposure
+% (img1)
 %
 % input
-%  g_images: 3 dimensional matrices, represneting the whole gray_image set.
+%  g_img: 3 dimensional matrices, represneting the whole gray_image set.
 %  [row, col, i] for i = 1:number of images.
-%  images: 4 dimensional matrices, representing the whole image set.
-%  row, col, channel, i] for i = 1:number of images.
+%  shift_bits: the maximum number of bits in the final offsets
+%  shift_ret: the result value of x and y by which img2 shifted
 %
 % output
-%  images: 4 dimensional matrices, representing the whole image set.
-%	[row, col, channel, i] for i = 1:number of images.
+%  shift_ret: the result value of x and y by which img2 shifted
 %
 % note
-%  We assume the input images have the same dimension, channel number and color space,
-%  with EXIF metadata.
+%  We assume the input images have the same dimension, channel number and 
+%  color space, with EXIF metadata.
 %
-%function [images] = alignment(g_images, images)
+% ref
+%  Fast, Robust Image Registration for Compositing High Dynamic Range Photographs from Handheld Exposures
+%
 function [shift_ret] = alignment(g_img1, g_img2, shift_bits, shift_ret)   
-    %min_err
+    
     cur_shift = zeros(1,2);
     h_1 = size(g_img1(),1);
     w_1 = size(g_img1(),2);
     h_2 = size(g_img2(),1);
     w_2 = size(g_img2(),2);
-    %disp([w_1,h_1,w_1,h_2]);
+    
     tb1 = zeros(h_1, w_1);
     tb2 = zeros(h_2, w_2);
     eb1 = zeros(h_1, w_1);
     eb2 = zeros(h_2, w_2);
-    %figure; imshow(tb1);
+    
     if shift_bits > 0
         sml_img1 = imresize(g_img1, 0.5);
         sml_img2 = imresize(g_img2, 0.5);
@@ -39,12 +42,11 @@ function [shift_ret] = alignment(g_img1, g_img2, shift_bits, shift_ret)
         cur_shift(1) = 0;
         cur_shift(2) = 0; 
     end
+    
     %ComputeBitmaps(g_img1, &tb1, &eb1);
     %ComputeBitmaps(g_img2, &tb2, &eb2);
     threshold_1 = median(reshape(g_img1(:,:),[],1));
     threshold_2 = median(reshape(g_img2(:,:),[],1));
-    %disp(threshold_1);
-    %disp(threshold_2);
     for i = 1:h_1
         for j = 1:w_1
             if g_img1(i,j) < threshold_1
@@ -69,16 +71,12 @@ function [shift_ret] = alignment(g_img1, g_img2, shift_bits, shift_ret)
             end
         end
     end
-    %figure; imshow(g_img1);
-    %figure; imshow(tb1);
+
     min_err = w_1 * h_1;
     for i = -1: 1: 1  
         for j = -1: 1: 1
             xs = cur_shift(1) + i;
             ys = cur_shift(2) + j;
-            %shifted_tb2 = zeros(h_1,w_1);
-            %shifted_eb2 = zeros(h_1,w_1);
-            %diff_b = zeros(h_1,w_1);
             shifted_tb2 = imtranslate(tb2,[xs, ys],'FillValues',0);
             shifted_eb2 = imtranslate(eb2,[xs, ys],'FillValues',0);
             diff_b = xor(tb1, shifted_tb2);
@@ -92,6 +90,5 @@ function [shift_ret] = alignment(g_img1, g_img2, shift_bits, shift_ret)
             end
           
         end
-    end
-    
+    end    
 end

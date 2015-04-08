@@ -1,112 +1,168 @@
-# [Digital Visual Effects 2011 Spring](http://www.csie.ntu.edu.tw/~cyy/courses/vfx/11spring/ "Digital Visual Effects 2011 Spring") @ CSIE.NTU.EDU.TW
+# [vfx 2015 Spring](http://www.csie.ntu.edu.tw/~cyy/courses/vfx/15spring/ "Digital Visual Effects 2011 Spring") @ CSIE.NTU.EDU.TW
 ## project #1: High Dynamic Range Imaging ([original link](http://www.csie.ntu.edu.tw/~cyy/courses/vfx/11spring/assignments/))
 
-D99944013,
-Shuen-Huei (Drake) Guan,
-(drake.guan@gmail.com)
+## 程式執行方式
+使用matlab2014撰寫，執行program資料夾中的main.m，參數都在main.m中最上方修改，output會有hdr和tone mapping後的結果在program資料夾中
+```
+%   folder: the (relative) path containing the image set.
+%   type_: 'global' or 'local' tone mapping
+%   phi: used by local tone mapping
+%   epsilon: used by local tone mapping (find the max gaussian scale)
+%   lambda: smoothness factor for gsolve.
+%   prefix: output LDR file's prefix name
+%   [srow scol]: the dimension of the resized image for sampling in gsolve.
+%   shift_bits: the maximum number of bits in the final offsets in
+%   alignment.
+%
+function main(folder, type_, alpha_, delta_, white_, phi, epsilon, lambda, prefix, srow, scol, shift_bits)
+```
 
-doc online: [vfx11spring_project1/](vfx11spring_project1/ "online document")
+## 實作內容
+1. alignment
+2. hdr
+3. tonemapping(global operator)
+4. tonemapping(local operator)
 
-## Preliminaries
+## Algorithm
 
-### Objective of the project
+### #1: Alignment (Medain Threshold Bitmap)
+  將圖片RGB資訊轉成灰階，方便後續採取Median Threshold Bitmap方法對位，為了增加對位的精準以及處理速度，把原圖尺寸一直縮小二分之一
+到最後有七張不同尺寸等級的圖片，以論文裡的演算法對每兩張不同曝光時間的照片互相比較，並將每次位移暫存並移動，其餘部分填上黑色，從最小尺寸等級一直到原尺寸，完成alignment對位．
 
-This project is my testing plan of examining the power and possibility of Open source for an university course, [VFX](http://www.csie.ntu.edu.tw/~cyy/courses/vfx/11spring/overview/ "Digital Visual Effects 2011 Spring"), lectured by Prof. [Yung-Yu Chuang](http://www.csie.ntu.edu.tw/~cyy/ "Yung-Yu Chuang 莊永裕"). There are totally 4 projects, each one for an assignment in the course. This project will host my working history of assignments and hopefully, there is something informative or helpful to myself and others :)
+1. 直接利用matlab指令將圖片RGB資訊轉成灰階
+2. 原圖尺寸一直縮小二分之一，到最後每張不同曝光時間的照片一共分別有七張不同尺寸
+3. 計算所有圖片的中位數，圖片裡的像素若大於中位數計為1，否則為0．第二種方法為找出所有像素在中位數±4範圍內，並記為0，其餘記為1．
+4. 使用上述兩種方法對每兩張不同曝光時間的圖片進行八個不同方位的比較，算出一個最佳位置
+5. 從尺寸最小的圖片往上做比較，進行對位
 
-### Introduction to the course
 
-With the help of digital technology, visual effects have been widely used in film production lately. For example, up to April 2004, the top ten all-time best selling movies are so-called "effects movies." Six of them even won Academic awards for their visual effects. This course will cover the techniques from computer graphics, computer vision and image processing with practical or potential usages in making visual effects.
+### #2: HDR 
+1.我們參考Paul E. Debevec 論文中所提到的演算法，最小化目標方程式
 
-## Project description
+![](https://cloud.githubusercontent.com/assets/11753996/7004184/d38f9a00-dc99-11e4-9e53-b0a3354c7874.png)
 
-High dynamic range (HDR) images have much larger dynamic ranges than traditional images' 256 levels. In addition, they correspond linearly to physical irradiance values of the scene. Hence, they are useful for many graphics and vision applications. In this assignment, you are asked to finish the following tasks to assemble an HDR image in a group of two.
 
-### HDR artifact  
 
-[![HDR artifact](image/tone-mapped-thumb/servers_tone_mapped_thumb.png "HDR artifcat")](image/tone-mapped/servers_tone_mapped.png "HDR artifact")
+2.滿足矩陣Ax=b，以SVD求解矩陣x，得到g函數，帶入權重值及曝光時間lnΔt
 
-### Algorithm
+![](https://cloud.githubusercontent.com/assets/11753996/7004201/12c4cec0-dc9a-11e4-926c-625f89f4e6f9.png)
 
-The following algorithms are implemented:
 
-* HDR: Debevec's algorithm in Matlab. (gsolve.m + hdrDebevec.m)
-* Tone Mapping: Reinhard's algorithm in Matlab. (tmoReinhard02.m)
 
-The whole project is implemented in Matlab, the language cool about scientific programming and visualization plotting. The entry point is *main.m*. The flow of the program is as following:
+3.計算多張不同曝光時間同像素的點，找出其算術平均值得到HDR圖像
 
-* Load an image set with different exposure for each picture taken by *readImages*.
-* Prepare a down-sampling of the image set for the following *gsolve.m*.
-* Prepare a weighting function by Debevec's 1997 paper.
-* Put all stuff above into *gsolve*, each channel (assuming R, G and B) is processed separately. After this step, we get the camera's response curve(function). We can plot it directly by *plot* with some axis description if necessary.
-* Invoke *hdrDebevec* to reconstruct the HDR.
-* Invoek *tmoReinhard02* to get tone-mapped LDR image.
 
-## Approach
+### #3: Tone Mapping (global operater)
+1.Tone Mapping目的為將HDR轉為LDR，假設 
 
-### Taking photos
+####Lw=0.27R+0.67G+0.06B
 
-Canon 5D EOS is used to take as many pictures as possible for each scene. In order to make sure the *stillness*, a tripod is used. Furthermore, [DSLR Camera Remote](http://www.ononesoftware.com/products/dslr-camera-remote/ "DSLR Camera Remote") is also installed on a Mac wired with a USB line to the camera to do somehow *remote shooting without touching the camera*. The results turn out good enough such that no alignment algorithm is needed.
+2.先在圖像中取得每一點的亮度值並取log，取得平均值再做exponetional
 
-### Alignment
+![](https://cloud.githubusercontent.com/assets/11753996/7006655/7dddc6a6-dcb5-11e4-87e2-d35b361f983c.png)
 
-Skip.
 
-### Camera response curve & HDR
+3.定義normal-key a值為0.18，並代入平均亮度Lw至下列方程式求得Lm
 
-Debevec's algorithm (gsolve.m + hdrDebevec.m) is used to recover the camera's response curve. 
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11753996/7006675/97173850-dcb5-11e4-898a-5190125ffb3d.png">
+</div>
 
-![camera response curve](image/camera_response_curve.png "reconstructed camera response curve for the used Canon 5D")
+4.設定場景中最大亮度為1.5，求得Ld
 
-* *gsolve.m* is borrowed from Debevec's paper for reconstructing the camera's response curve,
-* *hdrDebevec.m* is to convert those LDR images into a HDR image.
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11753996/7006744/1c087e20-dcb6-11e4-9e8f-5d42b487120f.png")
+</div>
 
-In this algorithm, several sampling pixels need to pick up to feed into *gsolve*. According to the paper and slides, 50~100 pixels are reasonable number. The issue comes next is, *which pixel should I pick up into the sampling bin?* A random pick-up has been tested several times and if the number is bigger enough, the result looks good. But that is not that guaranteed. By observation, an image shrinking operator can be applied to the original images to get smaller ones. Those reduced images stil capture somehow the original images' characteristics. As long as the size is smaller enough, we can feed all pixels in smaller ones to *gsolve*. The default size of the reduced images is (width: 20, height: 10), which turns out 200 sampling pixels, bigger enough for *gsolve*.
+5.最後重新計算LDR每個channel的亮度值
 
-One more issue to take care of in *hdrDebevec* is computational error. Because Matlab is such powerful that there is seldom error while computing out *NaN* or *Inf*. After several testing, we found we should replace those *NaN* and *Inf* by 0 to make the following tone mapping work.
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11753996/7006781/6a431866-dcb6-11e4-911a-852b4feccaaa.png">
+</div>
 
-#### Histogram of the reconstructed corridor HDR
 
-![histogram of the reconstructed corridor HDR](image/hist_of_corridor_hdr.png 'histogram of the reconstructed corridor HDR')
 
-### Tone mapping
 
-Reinhard's algorithm is implemented in *tmoReinhard02.m*. Only global operator is implemented here. 
+### #4: Tone Mapping (local operater)
+1.找出一定範圍內，使得所有像素亮度都差不多，沒有任何的sharp contrast，對亮度分佈Lm與Gaussian profile做摺積（convolution)轉換，
+並拿兩張Gaussian blurred images相減，由於要找出V1與V2在相近區域內有相同的亮度梯度（luminance gradient)，給予一個threshold ε，流程如下
 
-> The only trick here is that we first convert those images into luminance (or intensity). That is, converting 3-channel images into 1-channel images. Then, apply tone mapping operator on those luminance images. And finally multiply tone-mapped luminance by resting colors to get the final result. The reason behind this is a really interesting discovery. If the tone mapping operator is applied separately on each channel, the resulting LDR would have some sort of color shifting cause each channel has different *LwMean*!
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11753996/7024702/41896464-dd71-11e4-920a-3a0169c586af.png")
+</div>
 
-The above idea is still questionable and doubtable cause I haven't spent much time to realise the physical meanings behind. That is just my random thought and I even rollback the code to apply directly on all 3 channels instead of the luminance!
+2.求得Ld，最後重新計算LDR每個channel的亮度值
 
-## Results
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11753996/7024715/592569ce-dd71-11e4-9878-5e3219d1058a.png")
+</div>
 
-Corridor  
-[![results](image/tone-mapped-thumb/corridor_tone_mapped_thumb.png)](image/tone-mapped/corridor_tone_mapped.png 'corridor')
+##Result
+ 
+### #1: Alignment (Medain Threshold Bitmap)
+由於原圖之間差異太小，看不出來效果，我們故意拿一張圖位移很多來測試，設定在7層（最大位移為2^7)時會移回來
+input:
+圖一
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7038017/f52f47f6-dddd-11e4-82d6-fe619562621a.jpg">
+</div>
+圖一位移後
+![test2](https://cloud.githubusercontent.com/assets/11717755/7038036/34aeb92a-ddde-11e4-962c-30bf6e5821e2.jpg)
+output:
+![alignment_test](https://cloud.githubusercontent.com/assets/11717755/7038041/52d82fb2-ddde-11e4-8bc9-f3d5df46f2d8.png)
+另外，照片之間差異小時，層數設太大反而會因為照片曝光差太多而失敗，通常設定3層可以得到較好的比較結果
 
-Desktop01  
-[![results](image/tone-mapped-thumb/desktop01_tone_mapped_thumb.png)](image/tone-mapped/desktop01_tone_mapped.png 'desktop01')
-
-Desktop02  
-[![results](image/tone-mapped-thumb/desktop02_tone_mapped_thumb.png)](image/tone-mapped/desktop02_tone_mapped.png 'desktop02')
-
-Digimax Gate  
-[![results](image/tone-mapped-thumb/digimax_gate_tone_mapped_thumb.png)](image/tone-mapped/digimax_gate_tone_mapped.png 'digimax gate')
-
-Restroom  
-[![results](image/tone-mapped-thumb/restroom_tone_mapped_thumb.png)](image/tone-mapped/restroom_tone_mapped.png 'restroom')
-
-Scene (contributed by VicJuan)  
-[![results](image/tone-mapped-thumb/scene_tone_mapped_thumb.png)](image/tone-mapped/scene_tone_mapped.png 'scene')
-
-Servers  
-[![results](image/tone-mapped-thumb/servers_tone_mapped_thumb.png)](image/tone-mapped/servers_tone_mapped.png 'servers')
-
-Station (contributed by VicJuan)  
-[![results](image/tone-mapped-thumb/station_tone_mapped_thumb.png)](image/tone-mapped/station_tone_mapped.png 'station')
-
-Please take a look at the folder [tone mapped images](image/tone-mapped 'tone mapped images') for details.
-
-## References
-
-* Paul E. Debevec, Jitendra Malik, Recovering High Dynamic Range Radiance Maps from Photographs, SIGGRAPH 1997
-* Matlab, <http://www.mathworks.com/help/techdoc/>
-
-# vfx-project1-hdr
+### #2: HDR 
+input:
+f4 2"
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7028775/b675c3d0-dd8a-11e4-8bf8-95d054e6b4df.JPG">
+</div>
+f4 1"
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7029017/c0e9a56e-dd8c-11e4-94df-4d60324268ce.JPG">
+</div>
+f4 0.5"
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7029081/323783c6-dd8d-11e4-8365-8d90f6cf16a7.JPG">
+</div>
+f4 1/5
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7029109/7219b464-dd8d-11e4-89e9-83148e517470.JPG">
+</div>
+f4 1/8
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7029210/87ecc1ae-dd8e-11e4-8c6f-2e69a0c0bff9.JPG">
+</div>
+f4 1/15
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7029336/82208048-dd8f-11e4-84d4-18cde0eb320d.JPG">
+</div>
+f4 1/30
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7029336/82208048-dd8f-11e4-84d4-18cde0eb320d.JPG">
+</div>
+output:
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7030912/a0951ec0-dd9a-11e4-96b5-61a238cdab0b.png">
+</div>
+ 
+### #3: Tone Mapping (global operater)
+input:用hdr演算法得到的output(同上圖）<br>
+output:a越大圖整體越亮，white越大亮部細節增加，但亮部細節增加的同時暗步細節也會消失，因此需要local的tone mapping來改善
+![0407library_tone_mapped](https://cloud.githubusercontent.com/assets/11717755/7037412/1a0d178c-ddd5-11e4-9770-a6f6d4d72f5e.png)
+ 
+### #4: Tone Mapping (local operater)
+input:用hdr演算法得到的output(同上上圖）<br>
+output:
+a = 0.5, phi = 8, epsilon = 0.05 <br>
+可看出和global的結果比起來，local的邊緣較銳利，顏色相近的區域中對比較高
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7030453/5c67bbe8-dd97-11e4-96c1-be31bc9e4fd0.png">
+</div>
+ 
+###比較：使用matlab tone mapping function得到的結果（下圖）
+整體色調和相機拍到的照片以及hdr檔差很多，從paper實作的結果似乎比較好
+<div style="display:block">
+<img src="https://cloud.githubusercontent.com/assets/11717755/7031044/6c03f14e-dd9b-11e4-89fb-df3066e1ed96.png">
+</div>

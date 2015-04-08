@@ -1,3 +1,13 @@
+% input
+%  images: 4 dimensional matrices, representing the whole image set.
+%  [row, col, channel, i] for i = 1:number of images.
+%  g: 2 dimensional matrices, [0~255, channel]
+%  ln_t: [ln_e, i]for i = 1:number of images, representing image's log exposure time in second.
+%  w: the weighting function value for pixel value z
+% 
+% output
+%  imgHDR: 
+
 function imgHDR = hdrDebevec(images, g, ln_t, w)
     [row, col, channel, number] = size(images);
     ln_E = zeros(row, col, 3);
@@ -8,8 +18,8 @@ function imgHDR = hdrDebevec(images, g, ln_t, w)
 		totalWeight = 0;
 		for j = 1:number
 		    tempZ = images(y, x, channel, j) + 1;
-		    tempw = w(tempZ);
-		    tempg = g(tempZ);
+		    tempw = w(tempZ+1);
+		    tempg = g(tempZ+1);
 		    templn_t = ln_t(j);
 
 		    total_lnE = total_lnE + tempw * (tempg - templn_t);
@@ -19,6 +29,7 @@ function imgHDR = hdrDebevec(images, g, ln_t, w)
 	    end
 	end
     end
+    ln_E(isnan(ln_E))=0;
     imgHDR = exp(ln_E);
 
     % remove NAN or INF
