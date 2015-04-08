@@ -14,11 +14,15 @@
 
 ### Method #2: HDR 
 1.我們參考Paul E. Debevec 論文中所提到的演算法，最小化目標方程式
+
 ![](https://cloud.githubusercontent.com/assets/11753996/7004184/d38f9a00-dc99-11e4-9e53-b0a3354c7874.png)
 
 
+
 2.滿足矩陣Ax=b，以SVD求解矩陣x，得到g函數，帶入權重值及曝光時間lnΔt
+
 ![](https://cloud.githubusercontent.com/assets/11753996/7004201/12c4cec0-dc9a-11e4-926c-625f89f4e6f9.png)
+
 
 
 3.計算多張不同曝光時間同像素的點，找出其算術平均值得到HDR圖像
@@ -26,23 +30,28 @@
 
 ### Method #3: Tone Mapping (global operater)
 1.Tone Mapping目的為將HDR轉為LDR，假設 
+
 ####Lw=0.27R+0.67G+0.06B
 
 2.先在圖像中取得每一點的亮度值並取log，取得平均值再做exponetional
+
 ![](https://cloud.githubusercontent.com/assets/11753996/7006655/7dddc6a6-dcb5-11e4-87e2-d35b361f983c.png)
 
 
 3.定義normal-key a值為0.18，並代入平均亮度Lw至下列方程式求得Lm
+
 <div style="display:block">
 <img src="https://cloud.githubusercontent.com/assets/11753996/7006675/97173850-dcb5-11e4-898a-5190125ffb3d.png">
 </div>
 
 4.設定場景中最大亮度為1.5，求得Ld
+
 <div style="display:block">
 <img src="https://cloud.githubusercontent.com/assets/11753996/7006744/1c087e20-dcb6-11e4-9e8f-5d42b487120f.png")
 </div>
 
 5.最後重新計算LDR每個channel的亮度值
+
 <div style="display:block">
 <img src="https://cloud.githubusercontent.com/assets/11753996/7006781/6a431866-dcb6-11e4-911a-852b4feccaaa.png">
 </div>
@@ -53,11 +62,13 @@
 ### Method #4: Tone Mapping (local operater)
 1.找出一定範圍內，使得所有像素亮度都差不多，沒有任何的sharp contrast，對亮度分佈Lm與Gaussian profile做摺積（convolution)轉換，
 並拿兩張Gaussian blurred images相減，由於要找出V1與V2在相近區域內有相同的亮度梯度（luminance gradient)，給予一個threshold ε，流程如下
+
 <div style="display:block">
 <img src="https://cloud.githubusercontent.com/assets/11753996/7024702/41896464-dd71-11e4-920a-3a0169c586af.png")
 </div>
 
 2.求得Ld，最後重新計算LDR每個channel的亮度值
+
 <div style="display:block">
 <img src="https://cloud.githubusercontent.com/assets/11753996/7024715/592569ce-dd71-11e4-9878-5e3219d1058a.png")
 </div>
